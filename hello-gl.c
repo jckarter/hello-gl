@@ -4,6 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+ * Global data used by our render callback:
+ */
+
 static struct {
     GLuint vertex_buffer, element_buffer;
     GLuint textures[2];
@@ -21,6 +25,9 @@ static struct {
     GLfloat fade_factor;
 } g_resources;
 
+/*
+ * Data used to seed our vertex array and element array buffers:
+ */
 static const GLfloat g_vertex_buffer_data[] = { 
     -1.0f, -1.0f,
      1.0f, -1.0f,
@@ -29,15 +36,9 @@ static const GLfloat g_vertex_buffer_data[] = {
 };
 static const GLuint g_element_buffer_data[] = { 0, 1, 2, 3 };
 
-static GLuint make_buffer(GLenum target, const void *buffer_data, GLsizei buffer_size)
-{
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(target, buffer);
-    glBufferData(target, buffer_size, buffer_data, GL_STATIC_DRAW);
-    return buffer;
-}
-
+/*
+ * Boring, non-OpenGL-related utility functions:
+ */
 static void *file_contents(const char *filename, GLint *length)
 {
     FILE *f = fopen(filename, "r");
@@ -141,6 +142,18 @@ static void *read_tga(const char *filename, int *width, int *height)
     return pixels;
 }
 
+/*
+ * Functions for creating OpenGL objects:
+ */
+static GLuint make_buffer(GLenum target, const void *buffer_data, GLsizei buffer_size)
+{
+    GLuint buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(target, buffer);
+    glBufferData(target, buffer_size, buffer_data, GL_STATIC_DRAW);
+    return buffer;
+}
+
 static GLuint make_texture(const char *filename)
 {
     int width, height;
@@ -227,6 +240,9 @@ static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader)
     return program;
 }
 
+/*
+ * Load and create all of our resources:
+ */
 static int make_resources(void)
 {
     g_resources.vertex_buffer = make_buffer(
@@ -269,6 +285,9 @@ static int make_resources(void)
     return 1;
 }
 
+/*
+ * GLUT callbacks:
+ */
 static void update_fade_factor(void)
 {
     int milliseconds = glutGet(GLUT_ELAPSED_TIME);
@@ -316,6 +335,9 @@ static void render(void)
     glutSwapBuffers();
 }
 
+/*
+ * Entry point
+ */
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
