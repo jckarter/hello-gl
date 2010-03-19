@@ -1,0 +1,10 @@
+hello-gl.exe: hello-gl.obj
+	link /nologo /out:hello-gl.exe /SUBSYSTEM:console hello-gl.obj opengl32.lib glut32.lib glew32.lib
+
+hello-gl.obj: hello-gl.c
+	cl /Fohello-gl.obj /c hello-gl.c
+
+clean:
+	del hello-gl.obj
+	del hello-gl.exe
+
