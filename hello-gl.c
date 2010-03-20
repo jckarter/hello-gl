@@ -1,5 +1,9 @@
 #include <GL/glew.h>
-#include <GLUT/glut.h>
+#ifdef __APPLE__
+#  include <GLUT/glut.h>
+#else
+#  include <GL/glut.h>
+#endif
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,17 +28,6 @@ static struct {
 
     GLfloat fade_factor;
 } g_resources;
-
-/*
- * Data used to seed our vertex array and element array buffers:
- */
-static const GLfloat g_vertex_buffer_data[] = { 
-    -1.0f, -1.0f,
-     1.0f, -1.0f,
-    -1.0f,  1.0f,
-     1.0f,  1.0f
-};
-static const GLuint g_element_buffer_data[] = { 0, 1, 2, 3 };
 
 /*
  * Boring, non-OpenGL-related utility functions:
@@ -145,8 +138,11 @@ static void *read_tga(const char *filename, int *width, int *height)
 /*
  * Functions for creating OpenGL objects:
  */
-static GLuint make_buffer(GLenum target, const void *buffer_data, GLsizei buffer_size)
-{
+static GLuint make_buffer(
+    GLenum target,
+    const void *buffer_data,
+    GLsizei buffer_size
+) {
     GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(target, buffer);
@@ -241,6 +237,17 @@ static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader)
 }
 
 /*
+ * Data used to seed our vertex array and element array buffers:
+ */
+static const GLfloat g_vertex_buffer_data[] = { 
+    -1.0f, -1.0f,
+     1.0f, -1.0f,
+    -1.0f,  1.0f,
+     1.0f,  1.0f
+};
+static const GLuint g_element_buffer_data[] = { 0, 1, 2, 3 };
+
+/*
  * Load and create all of our resources:
  */
 static int make_resources(void)
@@ -262,12 +269,20 @@ static int make_resources(void)
     if (g_resources.textures[0] == 0 && g_resources.textures[1] == 0)
         return 0;
 
-    g_resources.vertex_shader = make_shader(GL_VERTEX_SHADER, "hello-gl.v.glsl");
+    g_resources.vertex_shader = make_shader(
+        GL_VERTEX_SHADER,
+        "hello-gl.v.glsl"
+    );
     if (g_resources.vertex_shader == 0)
         return 0;
-    g_resources.fragment_shader = make_shader(GL_FRAGMENT_SHADER, "hello-gl.f.glsl");
+
+    g_resources.fragment_shader = make_shader(
+        GL_FRAGMENT_SHADER,
+        "hello-gl.f.glsl"
+    );
     if (g_resources.fragment_shader == 0)
         return 0;
+
     g_resources.program = make_program(g_resources.vertex_shader, g_resources.fragment_shader);
     if (g_resources.program == 0)
         return 0;
@@ -297,9 +312,6 @@ static void update_fade_factor(void)
 
 static void render(void)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
     glUseProgram(g_resources.program);
 
     glUniform1f(g_resources.uniforms.fade_factor, g_resources.fade_factor);
@@ -331,7 +343,6 @@ static void render(void)
         (void*)0                            /* buffer offset */
     );
 
-    glDisableVertexAttribArray(g_resources.attributes.position);
     glutSwapBuffers();
 }
 
@@ -358,7 +369,6 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    g_resources.fade_factor = 0.0f;
     glutMainLoop();
     return 0;
 }
