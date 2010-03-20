@@ -1,9 +1,12 @@
 GLEW_INCLUDE = /opt/local/include
 GLEW_LIB = /opt/local/lib
 
-hello-gl: hello-gl.c
-	gcc -o hello-gl hello-gl.c -framework GLUT -framework OpenGL -I$(GLEW_INCLUDE) -L$(GLEW_LIB) -lGLEW
+hello-gl: hello-gl.o util.o
+	gcc -o hello-gl $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
+
+.c.o:
+	gcc -c -o $@ $< -I$(GLEW_INCLUDE)
 
 clean:
-	rm -f hello-gl
+	rm -f hello-gl hello-gl.o util.o 
 

@@ -1,9 +1,13 @@
 GL_INCLUDE = /usr/X11R6/include
 GL_LIB = /usr/X11R6/lib
 
-hello-gl: hello-gl.c
-	gcc -o hello-gl hello-gl.c -I$(GL_INCLUDE) -L$(GL_LIB) -lGL -lGLUT -lGLEW
+hello-gl: hello-gl.o util.o
+	gcc -o hello-gl $^ -L$(GL_LIB) -lGL -lGLUT -lGLEW
+
+.c.o:
+	gcc -c -o $@ $< -I$(GL_INCLUDE)
 
 clean:
-	rm -f hello-gl
+	rm -f hello-gl hello-gl.o util.o 
+
 

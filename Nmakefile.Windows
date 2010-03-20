@@ -1,10 +1,11 @@
-hello-gl.exe: hello-gl.obj
-	link /nologo /out:hello-gl.exe /SUBSYSTEM:console hello-gl.obj opengl32.lib glut32.lib glew32.lib
+hello-gl.exe: hello-gl.obj util.obj
+	link /nologo /out:hello-gl.exe /SUBSYSTEM:console $^ opengl32.lib glut32.lib glew32.lib
 
-hello-gl.obj: hello-gl.c
-	cl /Fohello-gl.obj /c hello-gl.c
+.c.obj: hello-gl.c
+	cl /Fo$@ /c $<
 
 clean:
 	del hello-gl.obj
+	del util.obj
 	del hello-gl.exe
 
