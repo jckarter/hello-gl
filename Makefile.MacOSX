@@ -4,9 +4,12 @@ GLEW_LIB = /opt/local/lib
 hello-gl: hello-gl.o util.o
 	gcc -o hello-gl $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
 
+hello-gl-dummy: hello-gl-dummy.o
+	gcc -o hello-gl-dummy $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
+
 .c.o:
 	gcc -c -o $@ $< -I$(GLEW_INCLUDE)
 
 clean:
-	rm -f hello-gl hello-gl.o util.o 
+	rm -f hello-gl hello-gl-dummy hello-gl.o util.o hello-gl-dummy.o
 
