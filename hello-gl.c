@@ -239,6 +239,7 @@ static void render(void)
         (void*)0                            /* buffer offset */
     );
 
+    glDisableVertexAttribArray(g_resources.attributes.position);
     glutSwapBuffers();
 }
 
