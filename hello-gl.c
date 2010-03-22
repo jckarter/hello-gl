@@ -114,8 +114,9 @@ static GLuint make_shader(GLenum type, const char *filename)
 
 static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader)
 {
-    GLuint program = glCreateProgram();
     GLint program_ok;
+
+    GLuint program = glCreateProgram();
 
     glAttachShader(program, vertex_shader);
     glAttachShader(program, fragment_shader);
