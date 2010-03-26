@@ -162,7 +162,7 @@ static int make_resources(void)
     g_resources.textures[0] = make_texture("hello1.tga");
     g_resources.textures[1] = make_texture("hello2.tga");
 
-    if (g_resources.textures[0] == 0 && g_resources.textures[1] == 0)
+    if (g_resources.textures[0] == 0 || g_resources.textures[1] == 0)
         return 0;
 
     g_resources.vertex_shader = make_shader(
@@ -222,21 +222,21 @@ static void render(void)
 
     glBindBuffer(GL_ARRAY_BUFFER, g_resources.vertex_buffer);
     glVertexAttribPointer(
-        g_resources.attributes.position,    /* attribute */
-        2,                                  /* size */
-        GL_FLOAT,                           /* type */
-        GL_FALSE,                           /* normalized? */
-        sizeof(GLfloat)*2,                  /* stride */
-        (void*)0                            /* buffer offset */
+        g_resources.attributes.position,  /* attribute */
+        2,                                /* size */
+        GL_FLOAT,                         /* type */
+        GL_FALSE,                         /* normalized? */
+        sizeof(GLfloat)*2,                /* stride */
+        (void*)0                          /* array buffer offset */
     );
     glEnableVertexAttribArray(g_resources.attributes.position);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_resources.element_buffer);
     glDrawElements(
-        GL_TRIANGLE_STRIP,                  /* mode */
-        4,                                  /* count */
-        GL_UNSIGNED_INT,                    /* type */
-        (void*)0                            /* buffer offset */
+        GL_TRIANGLE_STRIP,  /* mode */
+        4,                  /* count */
+        GL_UNSIGNED_INT,    /* type */
+        (void*)0            /* element array buffer offset */
     );
 
     glDisableVertexAttribArray(g_resources.attributes.position);
