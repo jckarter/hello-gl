@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <GL/glew.h>
 #ifdef __APPLE__
 #  include <GLUT/glut.h>
@@ -6,7 +7,6 @@
 #endif
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include "util.h"
 
 /*
@@ -73,8 +73,8 @@ static GLuint make_texture(const char *filename)
 
 static void show_info_log(
     GLuint object,
-    void (*glGet__iv)(GLuint, GLenum, GLint*),
-    void (*glGet__InfoLog)(GLuint, GLsizei, GLsizei*, GLchar*)
+    PFNGLGETSHADERIVPROC glGet__iv,
+    PFNGLGETSHADERINFOLOGPROC glGet__InfoLog
 )
 {
     GLint log_length;
