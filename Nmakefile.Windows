@@ -4,7 +4,7 @@ hello-gl.exe: hello-gl.obj util.obj
 hello-gl-dummy.exe: hello-gl-dummy.obj
 	link /nologo /out:hello-gl-dummy.exe /SUBSYSTEM:console hello-gl-dummy.obj opengl32.lib glut32.lib glew32.lib
 
-.c.obj: hello-gl.c
+.c.obj:
 	cl /nologo /Fo$@ /c $<
 
 clean:
