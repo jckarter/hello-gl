@@ -49,11 +49,11 @@ static GLuint make_texture(const char *filename)
 {
     int width, height;
     void *pixels = read_tga(filename, &width, &height);
+    GLuint texture;
 
     if (!pixels)
         return 0;
 
-    GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
