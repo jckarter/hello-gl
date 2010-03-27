@@ -9,5 +9,3 @@ hello-gl-dummy.exe: hello-gl-dummy.o
 
 clean:
 	rm -f hello-gl.exe hello-gl-dummy.exe hello-gl.o util.o hello-gl-dummy.o
-
-
