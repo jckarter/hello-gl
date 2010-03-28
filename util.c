@@ -54,7 +54,7 @@ void *read_tga(const char *filename, int *width, int *height)
     size_t read;
     void *pixels;
 
-    f = fopen(filename, "r");
+    f = fopen(filename, "rb");
 
     if (!f) {
         fprintf(stderr, "Unable to open %s for reading\n", filename);
