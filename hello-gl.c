@@ -141,7 +141,7 @@ static const GLfloat g_vertex_buffer_data[] = {
     -1.0f,  1.0f,
      1.0f,  1.0f
 };
-static const GLuint g_element_buffer_data[] = { 0, 1, 2, 3 };
+static const GLushort g_element_buffer_data[] = { 0, 1, 2, 3 };
 
 /*
  * Load and create all of our resources:
@@ -235,7 +235,7 @@ static void render(void)
     glDrawElements(
         GL_TRIANGLE_STRIP,  /* mode */
         4,                  /* count */
-        GL_UNSIGNED_INT,    /* type */
+        GL_UNSIGNED_SHORT,  /* type */
         (void*)0            /* element array buffer offset */
     );
 
