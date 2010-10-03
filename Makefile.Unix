@@ -5,7 +5,7 @@ hello-gl: hello-gl.o util.o
 	gcc -o hello-gl $^ -L$(GL_LIB) -lGL -lglut -lGLEW
 
 hello-gl-dummy: hello-gl-dummy.o
-	gcc -o hello-gl-dummy $^ -L$(GL_LIB) -lGL -lglut -lGLEW
+	gcc -o hello-gl-dummy $^ -L$(GL_LIB) -lGL -lglut -lGLEW -lm
 
 .c.o:
 	gcc -c -o $@ $< -I$(GL_INCLUDE)
