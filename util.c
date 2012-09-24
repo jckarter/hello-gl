@@ -100,10 +100,10 @@ void *read_tga(const char *filename, int *width, int *height)
     pixels = malloc(pixels_size);
 
     read = fread(pixels, 1, pixels_size, f);
+    fclose(f);
 
     if (read != pixels_size) {
         fprintf(stderr, "%s has incomplete image\n", filename);
-        fclose(f);
         free(pixels);
         return NULL;
     }
